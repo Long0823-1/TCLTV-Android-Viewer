@@ -1,0 +1,11 @@
+**/build/
+.local/
+*.ini
+*.ts
+*.apk
+*.zip
+*.jks
+*.keystore
+*.pass
+*.log
+__pycache__/

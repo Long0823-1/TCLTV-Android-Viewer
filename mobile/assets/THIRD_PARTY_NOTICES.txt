@@ -1,0 +1,21 @@
+TCL Viewer original application code: MIT License. Copyright (c) 2026 Long0823-1.
+
+LibVLC for Android 3.7.7 — VideoLAN — LGPL version 2.1.
+Unmodified Maven artifact: org.videolan.android:libvlc-all:3.7.7.
+LibVLC JNI source revision: 0b8dc65. VLC source revision: 586dd059ac.
+https://code.videolan.org/videolan/libvlcjni
+https://code.videolan.org/videolan/vlc
+https://repo.maven.apache.org/maven2/org/videolan/android/libvlc-all/3.7.7/
+LGPL license text is included as LGPL-2.1.txt.
+The build script and complete application source are distributed so the playback
+library can be replaced and this APK rebuilt/relinked. Reverse engineering for
+modifying/debugging the LGPL library is permitted.
+
+AndroidX libraries — Android Open Source Project — Apache License 2.0.
+Kotlin standard library — JetBrains — Apache License 2.0.
+JetBrains annotations — JetBrains — Apache License 2.0.
+Dependency versions, download locations, and checksums: mobile/dependencies.json.
+The application never redistributes TCL vendor libraries, device keys or broadcast recordings.
+VLC base revision in JNI buildsystem/get-vlc.sh: 84177b2273abc5c4300234e6e18b55a4d2dd5a03.
+The JNI source includes patches and build scripts; the VLC base archive includes contrib recipes.
+Official source archives and Java sources.jar files are supplied in the release source-bundle ZIP.

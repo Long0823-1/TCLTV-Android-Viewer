@@ -1,0 +1,18 @@
+package io.github.long0823.tclviewer;
+import java.io.*;
+import java.nio.charset.*;
+import java.util.*;
+public final class ChannelConfig {
+ public String host="";public String token="";public int tuner=1,controlPort=40557;public final ArrayList<Channel> channels=new ArrayList<>();
+ public static final class Channel {public String name,display;public int onid,tsid,sid;public String key(){return onid+":"+tsid+":"+sid;}public String mux(){return onid+":"+tsid;}public String toString(){return display+"  "+name;}}
+ public static ChannelConfig parse(byte[] data)throws IOException {
+  if(data.length>262144)throw new IOException("設定ファイルが大きすぎます。");Charset charset=StandardCharsets.UTF_8;
+  if(data.length>=2&&(data[0]&255)==255&&(data[1]&255)==254)charset=StandardCharsets.UTF_16LE;else if(data.length>=2&&(data[0]&255)==254&&(data[1]&255)==255)charset=StandardCharsets.UTF_16BE;
+  String text=new String(data,charset).replace("\ufeff","");ChannelConfig c=new ChannelConfig();String section="";LinkedHashMap<String,String> fields=new LinkedHashMap<>();
+  for(String line:(text+"\n[END]").split("\\r?\\n")){line=line.trim();if(line.isEmpty()||line.startsWith(";"))continue;if(line.startsWith("[")&&line.endsWith("]")){if(section.matches("Channel[0-9]+"))c.add(fields);section=line.substring(1,line.length()-1);fields.clear();continue;}int eq=line.indexOf('=');if(eq<0)continue;String k=line.substring(0,eq).trim(),v=line.substring(eq+1).trim();fields.put(k,v);try{if(section.equals("Server")&&k.equals("Host"))c.host=v;if(section.equals("Control")){if(k.equals("Token"))c.token=v;if(k.equals("TunerIndex"))c.tuner=Integer.parseInt(v);if(k.equals("Port"))c.controlPort=Integer.parseInt(v);}}catch(NumberFormatException e){throw new IOException("接続設定の数値が不正です。");}}
+  if(c.host.isEmpty()||c.host.length()>253||!c.host.matches("[A-Za-z0-9._:\\-]+")||!c.token.matches("[a-fA-F0-9]{64}")||c.tuner<0||c.tuner>1||c.controlPort<1||c.controlPort>65535||c.channels.isEmpty())throw new IOException("BonDriverの接続先・接続キー・局一覧を確認してください。");return c;
+ }
+ private void add(Map<String,String> f)throws IOException {try{Channel ch=new Channel();ch.name=f.getOrDefault("Name","");ch.display=f.getOrDefault("DisplayNumber","");ch.onid=Integer.parseInt(f.get("ONID"));ch.tsid=Integer.parseInt(f.get("TSID"));ch.sid=Integer.parseInt(f.get("ServiceID"));if(ch.name.isEmpty()||ch.name.length()>160||ch.onid<1||ch.onid>65535||ch.tsid<1||ch.tsid>65535||ch.sid<1||ch.sid>65535)throw new IllegalArgumentException();for(Channel old:channels)if(old.key().equals(ch.key()))return;if(channels.size()==512)throw new IllegalArgumentException();ch.name=ch.name.replaceFirst("^0*"+java.util.regex.Pattern.quote(ch.display)+"\\s+","");if(ch.display.matches("[0-9]{1,2}"))ch.display=String.format(Locale.ROOT,"%03d",Integer.parseInt(ch.display));channels.add(ch);}catch(Exception e){throw new IOException("局一覧を読み込めません。PCのセットアップツールで更新したINIを選んでください。");}}
+ public int streamPort(){return tuner==0?40556:40558;}
+ public String toIni(){StringBuilder b=new StringBuilder("[Server]\nHost=").append(host).append("\n[Control]\nPort=").append(controlPort).append("\nTunerIndex=").append(tuner).append("\nToken=").append(token).append("\n[Channels]\nCount=").append(channels.size()).append('\n');int i=0;for(Channel ch:channels)b.append("[Channel").append(i++).append("]\nName=").append(ch.name).append("\nDisplayNumber=").append(ch.display).append("\nONID=").append(ch.onid).append("\nTSID=").append(ch.tsid).append("\nServiceID=").append(ch.sid).append('\n');return b.toString();}
+}

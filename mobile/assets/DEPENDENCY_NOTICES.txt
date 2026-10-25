@@ -1,0 +1,4 @@
+AndroidX: Copyright The Android Open Source Project, Apache License 2.0.
+Kotlin and JetBrains annotations: Copyright JetBrains s.r.o. and contributors, Apache License 2.0.
+LibVLC: Copyright VideoLAN and contributors, GNU LGPL 2.1.
+Complete license texts: Apache-2.0.txt and LGPL-2.1.txt.

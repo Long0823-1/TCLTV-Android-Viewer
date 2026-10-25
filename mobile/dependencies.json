@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/annotation/annotation/1.7.1/annotation-1.7.1.jar",
+    "sha256": "b11676837cad011a5285d6074418649107ef25eba17131517e9557ef8c9984ed",
+    "file": "annotation-1.7.1.jar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/collection/collection/1.0.0/collection-1.0.0.jar",
+    "sha256": "9c8d117b5c2bc120a1cdfeb857e05b495b16c36013570372a708f7827e3ac9f9",
+    "file": "collection-1.0.0.jar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/core/core/1.0.0/core-1.0.0.aar",
+    "sha256": "d7672358fc0d46de678968bcddfd3bdfe1618574299a753477b16116cfec74f5",
+    "file": "core-1.0.0.aar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0.aar",
+    "sha256": "fde334ec7e22744c0f5bfe7caf1a84c9d717327044400577bdf9bd921ec4f7bc",
+    "file": "livedata-core-2.0.0.aar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar",
+    "sha256": "7bad7a188804adea6fa1f35d5ef99b705f20bd93ecadde484760ff86b535fefc",
+    "file": "lifecycle-common-2.0.0.jar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime/2.0.0/lifecycle-runtime-2.0.0.aar",
+    "sha256": "e4afc9e636183f6f3e0edf1cf46121a492ffd2c673075bb07f55c7a99dd43cfb",
+    "file": "lifecycle-runtime-2.0.0.aar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-common/2.0.0/core-common-2.0.0.jar",
+    "sha256": "4b80b337779b526e64b0ee0ca9e0df43b808344d145f8e9b1c42a134dac57ad8",
+    "file": "arch-common-2.0.0.jar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0.aar",
+    "sha256": "87e65fc767c712b437649c7cee2431ebb4bed6daef82e501d4125b3ed3f65f8e",
+    "file": "arch-runtime-2.0.0.aar"
+  },
+  {
+    "url": "https://dl.google.com/dl/android/maven2/androidx/versionedparcelable/versionedparcelable/1.0.0/versionedparcelable-1.0.0.aar",
+    "sha256": "f6438a93ed8016ccddca0e140a70be0b0110e0424edaa1472f84f98fed2e1ce3",
+    "file": "versionedparcelable-1.0.0.aar"
+  },
+  {
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.2.10/kotlin-stdlib-2.2.10.jar",
+    "sha256": "9c67cc79efd6b9215b49d2a4308f5f3433537376c7c88e89bdd6729bd096e61a",
+    "file": "kotlin-stdlib-2.2.10.jar"
+  },
+  {
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar",
+    "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
+    "file": "jetbrains-annotations-13.0.jar"
+  },
+  {
+    "url": "https://repo.maven.apache.org/maven2/org/videolan/android/libvlc-all/3.7.7/libvlc-all-3.7.7.aar",
+    "sha256": "b48dab96e0e90e34cce3861963500c144a5aadb1b249d501d6a4b104d849e61b",
+    "file": "libvlc-all-3.7.7.aar"
+  }
+]
