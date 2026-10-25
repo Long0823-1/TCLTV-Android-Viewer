@@ -1,0 +1,57 @@
+[
+  {
+    "key": "nhkg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/NHK_General_TV_2024.svg",
+    "source": "https://commons.wikimedia.org/wiki/File:NHK_General_TV_2024.svg"
+  },
+  {
+    "key": "nhke",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/NHK_Educational_TV_2024.svg",
+    "source": "https://commons.wikimedia.org/wiki/File:NHK_Educational_TV_2024.svg"
+  },
+  {
+    "url": "https://www.ntv.co.jp/assets/images/meta/og-image.png",
+    "source": "https://www.ntv.co.jp/",
+    "key": "ntv"
+  },
+  {
+    "url": "https://www.tbs.co.jp/program/um/v8/img/ogp/icon.png",
+    "source": "https://www.tbs.co.jp/",
+    "key": "tbs"
+  },
+  {
+    "url": "https://www.tv-asahi.co.jp/favicon.ico",
+    "source": "https://www.tv-asahi.co.jp/",
+    "key": "asahi"
+  },
+  {
+    "url": "https://www.tv-tokyo.co.jp/tbcms/assets/images/logo.svg",
+    "source": "https://www.tv-tokyo.co.jp/",
+    "key": "tx"
+  },
+  {
+    "url": "https://www.fujitv.co.jp/common/images/logo_ogp.png",
+    "source": "https://www.fujitv.co.jp/",
+    "key": "fuji"
+  },
+  {
+    "url": "https://s.mxtv.jp/favicon.ico",
+    "source": "https://s.mxtv.jp/",
+    "key": "mx"
+  },
+  {
+    "url": "https://www.jcom.co.jp/common_v10/images/logo-jcom.svg",
+    "source": "https://www.jcom.co.jp/",
+    "key": "jcom"
+  },
+  {
+    "url": "https://www.chiba-tv.com/static/new/images/logo2.png",
+    "source": "https://www.chiba-tv.com/",
+    "key": "chiba"
+  },
+  {
+    "url": "https://www.teletama.jp/assets/images/common/favicon.ico",
+    "source": "https://www.teletama.jp/",
+    "key": "teletama"
+  }
+]

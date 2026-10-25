@@ -1,28 +1,31 @@
-# TCL テレビ Android ビューアー 0.2.0（開発版）
+# TCL テレビ Android ビューアー 0.3.0（開発版）
 
 TCL TVのTSをスマートフォンで再生する独立アプリです。番組表・番組詳細・選局に対応します。Android 8以降、ARM64向け。スマートフォン側のrootは不要です。
 
-[APKとZIP](https://github.com/Long0823-1/TCLTV-Android-Viewer/releases) · [画像付きセットアップ](docs/SETUP.md) · [検証結果](docs/validation-v0.2.0.md)
+[APKとZIP](https://github.com/Long0823-1/TCLTV-Android-Viewer/releases) · [画像付きセットアップ](docs/SETUP.md) · [検証結果](docs/validation-v0.3.0.md)
 
-![モバイル画面](docs/images/mobile-home-v0.2.0.png)
+![モバイル画面](docs/images/mobile-home-v0.3.0.png)
 
-## 0.2.0の変更
+画像は自作テスト映像を再生したエミュレーター画面です。公開画像の局ロゴは汎用表示に置き換えています。
 
-- 初回からTVのIPを入力・保存できます。
-- TVの確認コードで接続キーとスキャン済み局一覧を取得できます。PCのINIコピーは必須ではなくなりました。
-- 接続受付中のTVをLAN内で検索してIPを自動入力します。見つからない場合は手動入力できます。
-- カード型のチャンネル一覧と番組表、スクロールできる接続設定画面。
-- Android内蔵MediaCodecを優先。未対応時はVLCソフトウェア復号へフォールバックします。
-- TextureViewとOpenGLによる映像表示、直接出力の互換モード、診断情報の保存。
-- ファイル選択や別アプリから戻った際に、映像の出力先を再接続。
+## 0.3.0の変更
 
-Xiaomi 12T Proでの黒画面報告に対応した変更を含みますが、Xiaomi実機で解消したことはまだ確認できていません。Androidエミュレーターで実TSの映像描画・音声デコードを確認しました。このイメージにはMPEG-2用MediaCodecがないため、フォールバック経路の試験です。
+- Pixelの操作感を参考にした画面構成。下部ナビゲーションでライブ・番組表・設定を切り替えます。
+- ライト／ダークに対応。Android 12以降では端末のシステムアクセント色を使います。
+- 全画面では横向きになり、ステータスバー・ナビゲーションバーと通常の画面部品を非表示にします。操作パネルは再生中3秒後に消え、タップで戻せます。
+- 前後の局、再生／停止、消音を映像上から操作できます。比率維持と画面を埋める拡大を切り替えられます。拡大時は映像の上下または左右が切れます。
+- 対応局は実際の放送局ロゴで表示。NHK総合とEテレを区別し、一覧・番組表・再生パネルに表示します。ロゴ画像は同梱せず、外部取得・端末キャッシュ方式です。
+- Android内蔵MediaCodec優先、TVからの接続情報取得、TV検索、IP手入力、INI読み込みは引き続き利用できます。
+
+0.2.0でXiaomi 12T Proの映像表示が改善したことを利用者が確認しています。0.3.0の新UIはAndroid 11エミュレーターで検証しました。確認範囲は[検証結果](docs/validation-v0.3.0.md)を参照してください。
+
+![ダーク表示](docs/images/mobile-dark-v0.3.0.png)
 
 ## 使い始める
 
 TV側の[TCLTV-Bondriver](https://github.com/Long0823-1/TCLTV-Bondriver)をセットアップ済みの場合は、TVセットアップAPKだけ0.4.2へ更新して「スマートフォンを接続」を開きます。既存の配信設定を再インストールする必要はありません。
 
-スマホをTVと通信できるWi-Fiに接続し、アプリの「接続設定」からTV検索またはIP入力を行い、TVの6桁の確認コードを入力して取得します。TV側は有線LAN・Wi-Fiのどちらでも構いません。初回設定後の視聴にPC・USB・ADBは不要です。
+スマホをTVと通信できるWi-Fiに接続し、アプリの下部の「設定」からTV検索またはIP入力を行い、TVの6桁の確認コードを入力して取得します。TV側は有線LAN・Wi-Fiのどちらでも構いません。初回設定後の視聴にPC・USB・ADBは不要です。
 
 ## 制限
 
@@ -40,4 +43,4 @@ Windows PowerShell、JDK、Android SDK Platform 35 / Build-Tools 36.0.0を使用
 
 ## ライセンスとソース
 
-アプリはMIT、LibVLC 3.7.7はLGPL 2.1です。詳細は `mobile/assets/THIRD_PARTY_NOTICES.txt` とライセンス文書を参照してください。上流ソースアーカイブとJava sources.jarは0.1.0のReleasesにあるsource-bundle ZIPで提供しています。LibVLC依存物は0.2.0でも同じです。TV側の取得機能のソースはTCLTV-Bondriverの `android/src/io/github/long0823/tclbondriver/PhonePairing.java` にあります。
+アプリはMIT、LibVLC 3.7.7はLGPL 2.1です。詳細は `mobile/assets/THIRD_PARTY_NOTICES.txt` とライセンス文書を参照してください。上流ソースアーカイブとJava sources.jarは0.1.0のReleasesにあるsource-bundle ZIPで提供しています。LibVLC依存物は0.3.0でも同じです。AndroidSVGとMaterial Symbolsの表記、および局ロゴの出典は[局ロゴについて](docs/STATION_LOGOS.md)と同梱の第三者ライセンスを参照してください。TV側の取得機能のソースはTCLTV-Bondriverの `android/src/io/github/long0823/tclbondriver/PhonePairing.java` にあります。

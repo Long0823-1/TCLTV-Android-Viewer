@@ -19,3 +19,15 @@ The application never redistributes TCL vendor libraries, device keys or broadca
 VLC base revision in JNI buildsystem/get-vlc.sh: 84177b2273abc5c4300234e6e18b55a4d2dd5a03.
 The JNI source includes patches and build scripts; the VLC base archive includes contrib recipes.
 Official source archives and Java sources.jar files are supplied in the release source-bundle ZIP.
+
+AndroidSVG 1.4: Copyright Paul LeBeau / Big Badaboom; Apache License 2.0.
+https://github.com/BigBadaboom/androidsvg
+Google Material Symbols Rounded: Copyright Google; Apache License 2.0.
+https://github.com/google/material-design-icons
+Station logos are NOT bundled with the application or its source releases.
+Logo URLs and attribution are listed in assets/station_logos.json.
+Images may be fetched on demand and cached only on the user's device.
+Trademarks/images belong to their respective broadcasters; the application's MIT license does not cover them. External retrieval does not grant permission for reuse.
+NHK logo source pages:
+https://commons.wikimedia.org/wiki/File:NHK_General_TV_2024.svg
+https://commons.wikimedia.org/wiki/File:NHK_Educational_TV_2024.svg

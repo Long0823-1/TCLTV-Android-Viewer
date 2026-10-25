@@ -1,0 +1,7 @@
+package io.github.long0823.tclviewer;
+import java.text.Normalizer;import java.util.*;
+public final class StationIdentity {
+ static String direct(String name){String n=Normalizer.normalize(name,Normalizer.Form.NFKC).toLowerCase(Locale.ROOT).replace(" ","");if(n.contains("nhk")&&n.contains("総合"))return "nhkg";if(n.contains("nhk")&&(n.contains("eテレ")||n.contains("教育")))return "nhke";if(n.contains("日テレ")||n.contains("日本テレビ"))return "ntv";if(n.contains("tbs"))return "tbs";if(n.contains("テレビ朝日")||n.contains("テレ朝"))return "asahi";if(n.contains("テレビ東京")||n.contains("テレ東"))return "tx";if(n.contains("フジテレビ"))return "fuji";if(n.contains("tokyomx"))return "mx";if(n.contains("j:com")||n.contains("jcom"))return "jcom";if(n.contains("チバテレ")||n.contains("千葉テレビ"))return "chiba";if(n.contains("テレ玉")||n.contains("テレビ埼玉"))return "teletama";return "";}
+ public static String key(ChannelConfig.Channel channel,List<ChannelConfig.Channel> channels){String result=direct(channel.name);if(!result.isEmpty())return result;for(ChannelConfig.Channel other:channels)if(other.mux().equals(channel.mux())){result=direct(other.name);if(!result.isEmpty())return result;}return "";}
+ public static String initials(String name){String n=Normalizer.normalize(name,Normalizer.Form.NFKC).replaceAll("[0-9\\s・]","");if(n.isEmpty())return "TV";return n.substring(0,Math.min(n.length(),2));}
+}

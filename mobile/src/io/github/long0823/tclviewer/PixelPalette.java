@@ -1,0 +1,6 @@
+package io.github.long0823.tclviewer;
+import android.content.Context;import android.content.res.Configuration;import android.os.Build;
+final class PixelPalette {
+ final boolean dark;int background,surface,high,text,muted,primary,onPrimary,selected,onSelected;
+ PixelPalette(Context c){dark=(c.getResources().getConfiguration().uiMode&Configuration.UI_MODE_NIGHT_MASK)==Configuration.UI_MODE_NIGHT_YES;background=dark?0xff101318:0xfff8f9ff;surface=dark?0xff1c2026:0xffeef1f9;high=dark?0xff282d35:0xffe3e7f0;text=dark?0xffe2e6ef:0xff191c20;muted=dark?0xffbfc5d0:0xff59606c;primary=dark?0xffa8c7fa:0xff315f9e;onPrimary=dark?0xff062e62:0xffffffff;selected=dark?0xff263f60:0xffd3e3fd;onSelected=dark?0xffd3e3fd:0xff102f54;if(Build.VERSION.SDK_INT>=31)try{primary=c.getColor(dark?android.R.color.system_accent1_200:android.R.color.system_accent1_600);onPrimary=c.getColor(dark?android.R.color.system_accent1_900:android.R.color.system_accent1_0);selected=c.getColor(dark?android.R.color.system_accent1_700:android.R.color.system_accent1_100);onSelected=c.getColor(dark?android.R.color.system_accent1_100:android.R.color.system_accent1_900);}catch(Exception ignored){}}
+}
