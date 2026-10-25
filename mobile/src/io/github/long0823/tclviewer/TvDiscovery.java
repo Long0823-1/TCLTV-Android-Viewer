@@ -1,0 +1,10 @@
+package io.github.long0823.tclviewer;
+import android.content.Context;import android.net.nsd.*;import android.os.*;
+final class TvDiscovery implements AutoCloseable {
+ interface Listener {void found(String host);void failed(String message);}
+ private final NsdManager manager;private final Handler ui=new Handler(Looper.getMainLooper());private final Listener listener;private boolean closed,resolving;private NsdManager.DiscoveryListener discovery;
+ TvDiscovery(Context context,Listener callback){manager=(NsdManager)context.getSystemService(Context.NSD_SERVICE);listener=callback;}
+ void start(){discovery=new NsdManager.DiscoveryListener(){public void onDiscoveryStarted(String t){}public void onDiscoveryStopped(String t){}public void onServiceLost(NsdServiceInfo i){}public void onStartDiscoveryFailed(String t,int e){ui.post(()->fail("TV検索を開始できません。IPを手動入力できます。"));}public void onStopDiscoveryFailed(String t,int e){}public void onServiceFound(NsdServiceInfo info){ui.post(()->{if(closed||resolving)return;resolving=true;manager.resolveService(info,new NsdManager.ResolveListener(){public void onResolveFailed(NsdServiceInfo i,int e){ui.post(()->resolving=false);}public void onServiceResolved(NsdServiceInfo i){ui.post(()->{if(closed)return;resolving=false;if(i.getPort()==40559&&i.getHost() instanceof java.net.Inet4Address){String host=i.getHost().getHostAddress();close();listener.found(host);}});}});});}};try{manager.discoverServices("_tcltv._tcp.",NsdManager.PROTOCOL_DNS_SD,discovery);ui.postDelayed(()->fail("TVが見つかりません。TV側で接続受付を開くか、IPを手動入力してください。"),12000);}catch(Exception e){fail("TV検索を開始できません。IPを手動入力できます。");}}
+ private void fail(String message){if(closed)return;close();listener.failed(message);}
+ public void close(){if(closed)return;closed=true;ui.removeCallbacksAndMessages(null);if(discovery!=null)try{manager.stopServiceDiscovery(discovery);}catch(Exception ignored){}}
+}

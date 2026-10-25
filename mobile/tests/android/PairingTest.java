@@ -1,0 +1,3 @@
+package io.github.long0823.tclviewer;
+import android.app.Instrumentation;import android.os.Bundle;
+public class PairingTest extends Instrumentation {private String host,pin;public void onCreate(Bundle b){super.onCreate(b);host=b.getString("host");pin=b.getString("pin");start();}public void onStart(){Bundle out=new Bundle();try{ChannelConfig c=PairingClient.fetch(host,pin);c.tuner=0;getTargetContext().getSharedPreferences("MainActivity",0).edit().putString("profile",c.toIni()).commit();out.putInt("channels",c.channels.size());out.putString("result","PASS");finish(-1,out);}catch(Exception e){out.putString("result","FAIL "+e.getClass().getSimpleName()+": "+e.getMessage());finish(0,out);}}}

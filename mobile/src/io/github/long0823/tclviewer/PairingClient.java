@@ -1,0 +1,12 @@
+package io.github.long0823.tclviewer;
+import java.io.*;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+public final class PairingClient {
+ public static ChannelConfig fetch(String host,String code)throws IOException {
+  if(host.isEmpty()||host.length()>253||!host.matches("[A-Za-z0-9._:\\-]+")||!code.matches("[0-9]{6}"))throw new IOException("TVのIPと6桁の確認コードを入力してください。");
+  try(Socket socket=new Socket()){socket.connect(new InetSocketAddress(host,40559),4000);socket.setSoTimeout(8000);String authority=host.contains(":")?"["+host+"]":host;byte[] request=("POST /pair HTTP/1.1\r\nHost: "+authority+":40559\r\nContent-Type: text/plain\r\nContent-Length: 6\r\nConnection: close\r\n\r\n"+code).getBytes(StandardCharsets.US_ASCII);OutputStream output=socket.getOutputStream();output.write(request);output.flush();InputStream input=new BufferedInputStream(socket.getInputStream());String status=line(input);if(!status.matches("HTTP/1\\.[01] [0-9]{3}.*"))throw new IOException("TVの接続応答を確認できません。");int result=Integer.parseInt(status.substring(9,12)),length=-1,headers=0;String h;while(!(h=line(input)).isEmpty()){if(++headers>30)throw new IOException("TVの応答が長すぎます。");if(h.toLowerCase(Locale.ROOT).startsWith("content-length:")){try{length=Integer.parseInt(h.substring(15).trim());}catch(NumberFormatException e){throw new IOException("TVの応答サイズが不正です。");}}if(h.toLowerCase(Locale.ROOT).startsWith("transfer-encoding:"))throw new IOException("未対応のTV応答です。");}if(result==403)throw new IOException("確認コードが違います。TVの表示を確認してください。");if(result!=200)throw new IOException("TV側で接続の受付を開始し直してください。");if(length<1||length>262144)throw new IOException("設定のサイズが不正です。");byte[] profile=new byte[length];new DataInputStream(input).readFully(profile);ChannelConfig config=ChannelConfig.parse(profile);config.host=host;return config;}catch(EOFException e){throw new IOException("TVの接続受付が終了しました。確認コードを表示し直してください。",e);}
+ }
+ private static String line(InputStream in)throws IOException{ByteArrayOutputStream line=new ByteArrayOutputStream();for(int i=0;i<1024;i++){int c=in.read();if(c<0)throw new EOFException();if(c==10)return line.toString("US-ASCII").replace("\r","");line.write(c);}throw new IOException("TVの応答が長すぎます。");}
+}

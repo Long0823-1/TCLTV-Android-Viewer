@@ -1,49 +1,42 @@
-# TCL テレビ Android ビューアー 0.1.0（開発版）
+# TCL テレビ Android ビューアー 0.2.0（開発版）
 
-[APKのダウンロード](https://github.com/Long0823-1/TCLTV-Android-Viewer/releases) · [画像付きセットアップ](docs/SETUP.md) · [検証結果](docs/validation-v0.1.0.md)
+TCL TVのTSをスマートフォンで再生する独立アプリです。番組表・番組詳細・選局に対応します。Android 8以降、ARM64向け。スマートフォン側のrootは不要です。
 
-TCLTV-BonDriver v0.4.1 の配信をAndroidスマートフォンで視聴する独立アプリです。LibVLCを内蔵し、外部プレーヤーは不要です。Android 8以降、ARM64向け。Xiaomi 12T Pro実機での確認は未実施です。
+[APKとZIP](https://github.com/Long0823-1/TCLTV-Android-Viewer/releases) · [画像付きセットアップ](docs/SETUP.md) · [検証結果](docs/validation-v0.2.0.md)
 
-## 初回設定
+![モバイル画面](docs/images/mobile-home-v0.2.0.png)
 
-1. TV側のv0.4.1セットアップとチャンネルスキャンを完了します。
-2. スマートフォンをTVと通信できる同じ家庭内LANのWi-Fiに接続します。
-3. APKをインストールします。
-4. PCで生成した自分の `BonDriver_TCLG06.ini` または `BonDriver_TCLG06_1.ini` をスマートフォンへ安全にコピーします。
-5. アプリの「接続設定」から設定ファイルを読み込み、接続先とチューナーを確認します。
-6. チャンネルを選択して視聴します。番組表の更新は、選択したチューナーで各放送波を順番に受信するため、視聴が一時停止します。
+## 0.2.0の変更
 
-INIには接続キーが含まれます。GitHubなどに公開しないでください。取り込んだ接続情報はアプリ専用領域に保存し、Androidバックアップは無効です。日常の視聴にスマートフォンのroot、PC、USB、ADBは不要です。
+- 初回からTVのIPを入力・保存できます。
+- TVの確認コードで接続キーとスキャン済み局一覧を取得できます。PCのINIコピーは必須ではなくなりました。
+- 接続受付中のTVをLAN内で検索してIPを自動入力します。見つからない場合は手動入力できます。
+- カード型のチャンネル一覧と番組表、スクロールできる接続設定画面。
+- Android内蔵MediaCodecを優先。未対応時はVLCソフトウェア復号へフォールバックします。
+- TextureViewとOpenGLによる映像表示、直接出力の互換モード、診断情報の保存。
 
-## 動作と制限
+Xiaomi 12T Proでの黒画面報告に対応した変更を含みますが、Xiaomi実機で解消したことはまだ確認できていません。Androidエミュレーターで実TSの映像描画・音声デコードを確認しました。このイメージにはMPEG-2用MediaCodecがないため、フォールバック経路の試験です。
 
-- 局一覧は読み込んだスキャン結果を使用します。
-- 番組表は実際のTSのEITから取得し、最大48時間分を端末内に保存します。受信時間や放送局により空欄になります。
-- 番組のタップで詳細を表示し、そのサービスを選局できます。
-- 選択した1系統を使用します。同じチューナーをPCなどから同時に選局すると競合します。
-- MPEG-2映像をソフトウェア復号します。スマートフォン実機での性能確認が必要です。
-- 一部の外字・DRCSは「□」になります。字幕・データ放送表示は未実装です。
-- 家庭内LAN用です。インターネット越しの認証中継、VPN、自動画質変換は未実装です。
-- TVのIPが変わった場合は接続設定で更新します。LAN内の自動探索は行いません。
+## 使い始める
+
+TV側の[TCLTV-Bondriver](https://github.com/Long0823-1/TCLTV-Bondriver)をセットアップ済みの場合は、TVセットアップAPKだけ0.4.2へ更新して「スマートフォンを接続」を開きます。既存の配信設定を再インストールする必要はありません。
+
+スマホをTVと通信できるWi-Fiに接続し、アプリの「接続設定」からTV検索またはIP入力を行い、TVの6桁の確認コードを入力して取得します。TV側は有線LAN・Wi-Fiのどちらでも構いません。初回設定後の視聴にPC・USB・ADBは不要です。
+
+## 制限
+
+家庭内LAN用です。外出先接続、画質変換、録画、字幕・データ放送表示は未実装です。番組表はTSのEITを受信して表示し、最大48時間分を保存します。一部の外字・DRCSは□になります。番組表更新中は選択したチューナーでの視聴が一時停止します。PCとの同時視聴は別のチューナーを選んでください。
 
 ## ビルド
 
-Windows PowerShell、JDK、Android SDK platform35 / build-tools36.0.0が必要です。
+Windows PowerShell、JDK、Android SDK Platform 35 / Build-Tools 36.0.0を使用します。
 
 ```powershell
 .\mobile\build.ps1 -Abi arm64-v8a -SdkRoot C:\path\to\Android\Sdk -JdkRoot C:\path\to\jdk
 ```
 
-依存物は `dependencies.json` のURLとSHA256で検証します。署名鍵はリポジトリ直下 `.local/signing.jks`、パスワードは `.local/signing.pass`、別名は `tclbondriver` です。これらは配布物に含みません。自分の署名鍵を用意してください。LibVLC AARを交換する場合は対応するハッシュも更新して再ビルドできます。
+署名鍵は `.local/signing.jks`、パスワードは `.local/signing.pass`、別名は `tclbondriver` です。独自の鍵を用意してください。`-SigningDirectory` で別の保存先も指定できます。依存物は `mobile/dependencies.json` のSHA256で検証します。再生ライブラリを変更する場合は、対応するハッシュも更新して再ビルドできます。
 
-`tests/CoreTest.java` は設定ファイルと実TSを引数に、文字デコード・設定検証・EIT CRCと番組取得を検証します。`tests/android/SmokeTest.java` はデバッグ用であり、公開APKには含まれません。
+## ライセンスとソース
 
-## ライセンス
-
-アプリのソースはリポジトリのMITライセンスです。LibVLCその他のライセンスは `mobile/assets/THIRD_PARTY_NOTICES.txt` と `mobile/assets/LGPL-2.1.txt` を参照してください。依存ライブラリの公式ソースアーカイブはReleasesにも配置します。
-### 対応ソース
-
-LibVLC JNIのソースは `0b8dc65`、VLC本体のベースはJNIビルドスクリプトに指定された `84177b2273abc5c4300234e6e18b55a4d2dd5a03` です。AARに記録されたVLCリビジョン `586dd059ac` はビルド時のパッチ適用後の識別子です。JNIアーカイブにはパッチとビルドスクリプト、VLCアーカイブにはcontribのレシピが含まれます。公式ソースアーカイブと各Java依存物のsources.jarをReleasesのsource-bundle ZIPで提供します。
-
-- [LibVLC JNI source archive](https://code.videolan.org/videolan/libvlcjni/-/archive/0b8dc65/libvlcjni-0b8dc65.tar.gz)
-- [VLC base source archive](https://code.videolan.org/videolan/vlc/-/archive/84177b2273abc5c4300234e6e18b55a4d2dd5a03/vlc-84177b2273abc5c4300234e6e18b55a4d2dd5a03.tar.gz)
+アプリはMIT、LibVLC 3.7.7はLGPL 2.1です。詳細は `mobile/assets/THIRD_PARTY_NOTICES.txt` とライセンス文書を参照してください。上流ソースアーカイブとJava sources.jarは0.1.0のReleasesにあるsource-bundle ZIPで提供しています。LibVLC依存物は0.2.0でも同じです。TV側の取得機能のソースはTCLTV-Bondriverの `android/src/io/github/long0823/tclbondriver/PhonePairing.java` にあります。
