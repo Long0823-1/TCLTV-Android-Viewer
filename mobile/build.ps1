@@ -26,7 +26,7 @@ $resourceDirs.Add("$PSScriptRoot\res")
 $flats=[Collections.Generic.List[string]]::new();$number=0
 foreach($dir in $resourceDirs){$compiled="$build\compiled\$number";New-Item -ItemType Directory -Force $compiled | Out-Null;foreach($file in (Get-ChildItem $dir -Recurse -File)){Tool "$tools\aapt2.exe" @('compile',$file.FullName,'-o',$compiled)};Get-ChildItem $compiled -Filter '*.flat' | ForEach-Object {$flats.Add($_.FullName)};$number++}
 $manifestText=[IO.File]::ReadAllText("$PSScriptRoot\AndroidManifest.xml")
-if($Debug){$manifestText=$manifestText.Replace('<application ','<application android:debuggable="true" ');$manifestText=$manifestText.Replace('</manifest>','<instrumentation android:name="io.github.long0823.tclviewer.SmokeTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.SettingsTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.PairingTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.LifecycleTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.FullscreenTest" android:targetPackage="io.github.long0823.tclviewer"/></manifest>')}
+if($Debug){$manifestText=$manifestText.Replace('<application ','<application android:debuggable="true" ');$manifestText=$manifestText.Replace('</manifest>','<instrumentation android:name="io.github.long0823.tclviewer.SmokeTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.SettingsTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.PairingTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.LifecycleTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.IptvSettingsTest" android:targetPackage="io.github.long0823.tclviewer"/><instrumentation android:name="io.github.long0823.tclviewer.FullscreenTest" android:targetPackage="io.github.long0823.tclviewer"/></manifest>')}
 [IO.File]::WriteAllText("$build\AndroidManifest.xml",$manifestText,[Text.UTF8Encoding]::new($false))
 $link=@('link','-o',"$build\base.apk",'-I',$platform,'--manifest',"$build\AndroidManifest.xml",'--java',"$build\generated",'--extra-packages',($packages -join ':'),'--auto-add-overlay')
 foreach($file in $flats){$link+=@('-R',$file)}
@@ -43,7 +43,7 @@ Tool "$JdkRoot\bin\jar.exe" @('uf',"$build\base.apk",'-C',"$build\package",'.','
 & "$tools\zipalign.exe" -f 4 "$build\base.apk" "$build\aligned.apk"
 if($LASTEXITCODE){if($LASTEXITCODE -ne -1073741819){throw 'Zipalign failed'};Tool 'python' @("$PSScriptRoot\recover-aapt-zip.py","$build\aligned.apk")}
 Tool "$tools\zipalign.exe" @('-c','4',"$build\aligned.apk")
-$output=Join-Path $build ('TCL-Viewer-0.3.0-'+$Abi+$(if($Debug){'-debug'}else{''})+'.apk')
+$output=Join-Path $build ('TCL-Viewer-0.4.0-'+$Abi+$(if($Debug){'-debug'}else{''})+'.apk')
 Tool "$tools\apksigner.bat" @('sign','--ks',"$SigningDirectory\signing.jks",'--ks-pass',"file:$SigningDirectory\signing.pass",'--ks-key-alias','tclbondriver','--out',$output,"$build\aligned.apk")
 Tool "$tools\apksigner.bat" @('verify','--verbose',$output)
 Write-Output "APK ready: $output"

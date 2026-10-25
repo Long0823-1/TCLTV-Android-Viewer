@@ -9,3 +9,6 @@
 *.pass
 *.log
 __pycache__/
+
+*.m3u
+*.m3u8
