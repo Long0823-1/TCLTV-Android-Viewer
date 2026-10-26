@@ -1,5 +1,14 @@
 # TCL テレビ Android ビューアー 0.4.1（開発版）
 
+## Magisk適用済みbootイメージの公開（2026-10-27）
+
+TCL 32S5400（G06 / MT5867）向けの **Magisk 25.2（25200）適用済みboot.img** を、別リポジトリで公開しました。ユーザーによる実機起動試験で正常動作を確認しています。
+
+[対応条件・導入説明](https://github.com/Long0823-1/TCL-G06-Magisk-Boot) · [bootイメージとSHA-256をダウンロード](https://github.com/Long0823-1/TCL-G06-Magisk-Boot/releases/tag/magisk-25.2-20261027)
+
+**改変bootを書き込む前に、必ずvbmetaのAVB検証を無効化してください。** ブートローダーのアンロックとは別の操作です。対象TVと同じファームウェアのvbmetaを使用し、元のboot・vbmeta等のバックアップと復旧手段を確保してください。手順は[導入・復旧の説明](https://github.com/Long0823-1/twrp-tcl-g06-mt5867#導入と復旧)を参照してください。機種名が同じでも別基板・別ファームウェア・他個体は未検証です。スマホ視聴アプリを使うスマートフォン自身のroot化は不要です。
+
+
 TCL TVのTSをスマートフォンで再生する独立アプリです。番組表・番組詳細・選局に対応します。Android 8以降、ARM64向け。スマートフォン側のrootは不要です。
 
 [APKとZIP](https://github.com/Long0823-1/TCLTV-Android-Viewer/releases) · [画像付きセットアップ](docs/SETUP.md) · [検証結果](docs/validation-v0.4.1.md)
