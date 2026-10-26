@@ -1,12 +1,22 @@
-# TCL テレビ Android ビューアー 0.4.0（開発版）
+# TCL テレビ Android ビューアー 0.4.1（開発版）
 
 TCL TVのTSをスマートフォンで再生する独立アプリです。番組表・番組詳細・選局に対応します。Android 8以降、ARM64向け。スマートフォン側のrootは不要です。
 
-[APKとZIP](https://github.com/Long0823-1/TCLTV-Android-Viewer/releases) · [画像付きセットアップ](docs/SETUP.md) · [検証結果](docs/validation-v0.4.0.md)
+[APKとZIP](https://github.com/Long0823-1/TCLTV-Android-Viewer/releases) · [画像付きセットアップ](docs/SETUP.md) · [検証結果](docs/validation-v0.4.1.md)
 
 ![モバイル画面](docs/images/mobile-home-v0.3.0.png)
 
 画像は自作テスト映像を再生したエミュレーター画面です。公開画像の局ロゴは汎用表示に置き換えています。
+
+## 0.4.1の変更
+
+TV側0.6.0のXMLTV番組表に対応し、「IPTVのM3U接続先」から番組表XML URLをコピーできます。TV更新後、確認コードで接続情報を再取得してください。番組情報の収集はTV側で実行します。
+
+[XMLTVの使い方](docs/IPTV.md) · [TV側の収集手順](https://github.com/Long0823-1/TCLTV-Bondriver/blob/main/docs/XMLTV.md)
+
+![XMLTVの接続先](docs/images/mobile-xmltv-v0.4.1.png)
+
+画像のIPとキーはテスト用です。
 
 ## 0.4.0の変更
 
@@ -33,7 +43,7 @@ TV側0.5.0の消灯時通信維持・IPTVに合わせた更新です。
 - 対応局は実際の放送局ロゴで表示。NHK総合とEテレを区別し、一覧・番組表・再生パネルに表示します。ロゴ画像は同梱せず、外部取得・端末キャッシュ方式です。
 - Android内蔵MediaCodec優先、TVからの接続情報取得、TV検索、IP手入力、INI読み込みは引き続き利用できます。
 
-0.2.0でXiaomi 12T Proの映像表示が改善したことを利用者が確認しています。0.3.0の新UIはAndroid 11エミュレーターで検証しました。確認範囲は[検証結果](docs/validation-v0.4.0.md)を参照してください。
+0.2.0でXiaomi 12T Proの映像表示が改善したことを利用者が確認しています。0.3.0の新UIはAndroid 11エミュレーターで検証しました。確認範囲は[検証結果](docs/validation-v0.4.1.md)を参照してください。
 
 ![ダーク表示](docs/images/mobile-dark-v0.3.0.png)
 

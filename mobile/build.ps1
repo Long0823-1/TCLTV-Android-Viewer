@@ -43,7 +43,7 @@ Tool "$JdkRoot\bin\jar.exe" @('uf',"$build\base.apk",'-C',"$build\package",'.','
 & "$tools\zipalign.exe" -f 4 "$build\base.apk" "$build\aligned.apk"
 if($LASTEXITCODE){if($LASTEXITCODE -ne -1073741819){throw 'Zipalign failed'};Tool 'python' @("$PSScriptRoot\recover-aapt-zip.py","$build\aligned.apk")}
 Tool "$tools\zipalign.exe" @('-c','4',"$build\aligned.apk")
-$output=Join-Path $build ('TCL-Viewer-0.4.0-'+$Abi+$(if($Debug){'-debug'}else{''})+'.apk')
+$output=Join-Path $build ('TCL-Viewer-0.4.1-'+$Abi+$(if($Debug){'-debug'}else{''})+'.apk')
 Tool "$tools\apksigner.bat" @('sign','--ks',"$SigningDirectory\signing.jks",'--ks-pass',"file:$SigningDirectory\signing.pass",'--ks-key-alias','tclbondriver','--out',$output,"$build\aligned.apk")
 Tool "$tools\apksigner.bat" @('verify','--verbose',$output)
 Write-Output "APK ready: $output"
