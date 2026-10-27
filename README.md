@@ -79,3 +79,9 @@ Windows PowerShell、JDK、Android SDK Platform 35 / Build-Tools 36.0.0を使用
 ## ライセンスとソース
 
 アプリはMIT、LibVLC 3.7.7はLGPL 2.1です。詳細は `mobile/assets/THIRD_PARTY_NOTICES.txt` とライセンス文書を参照してください。上流ソースアーカイブとJava sources.jarは0.1.0のReleasesにあるsource-bundle ZIPで提供しています。LibVLC依存物は0.4.0でも同じです。AndroidSVGとMaterial Symbolsの表記、および局ロゴの出典は[局ロゴについて](docs/STATION_LOGOS.md)と同梱の第三者ライセンスを参照してください。TV側の取得機能のソースはTCLTV-Bondriverの `android/src/io/github/long0823/tclbondriver/PhonePairing.java` にあります。
+
+## Support / 開発支援
+
+開発・保守活動をKo-fiで支援できます。
+
+[Ko-fiで支援する](https://ko-fi.com/long0823)
