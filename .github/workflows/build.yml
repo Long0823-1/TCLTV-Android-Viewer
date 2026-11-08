@@ -1,0 +1,49 @@
+name: Build APK
+
+# Builds the Android viewer APK (arm64-v8a) with the repository's own
+# mobile/build.ps1 on a Windows runner. The signing key is generated
+# ephemerally on the runner (same .local/ layout as a local build), so
+# CI APKs are for verification and cannot overwrite a release APK that
+# was signed with a kept local key.
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: android-actions/setup-android@v4
+      - name: Install Android SDK packages
+        run: sdkmanager "platforms;android-35" "build-tools;36.0.0"
+      - name: Generate ephemeral signing key
+        shell: pwsh
+        run: |
+          $local = Join-Path $PWD '.local'
+          New-Item -ItemType Directory -Force -Path $local | Out-Null
+          $passwordFile = Join-Path $local 'signing.pass'
+          $keyFile = Join-Path $local 'signing.jks'
+          $random = New-Object byte[] 32
+          $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+          $rng.GetBytes($random)
+          $rng.Dispose()
+          [System.IO.File]::WriteAllText($passwordFile, ([System.BitConverter]::ToString($random)).Replace('-', ''), [System.Text.UTF8Encoding]::new($false))
+          & "$env:JAVA_HOME/bin/keytool.exe" -genkeypair -keystore $keyFile -storepass:file $passwordFile -keypass:file $passwordFile -alias tclbondriver -keyalg RSA -keysize 2048 -validity 10000 -dname 'CN=Long0823-1'
+          if ($LASTEXITCODE -ne 0) { throw 'keytool failed' }
+      - name: Build APK
+        shell: pwsh
+        run: ./mobile/build.ps1 -Abi arm64-v8a -SdkRoot "$env:ANDROID_HOME" -JdkRoot "$env:JAVA_HOME"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TCLTV-Android-Viewer-apk
+          path: mobile/build/arm64-v8a/TCL-Viewer-*.apk
+          if-no-files-found: error
